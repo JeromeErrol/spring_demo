@@ -2,18 +2,25 @@
 
  function onDocumentReady(){
     controller.init();
+    ui.init();
  }
 
  var model = {
+    activeBookmark : {},
     user : {},
-    bookmarks : []
+    bookmarks : [],
+
+    findBookmarkById : function(id){
+        // TODO
+        return model.bookmarks[0];
+    }
  }
 
  var ui = {
 
     init : function(){
         $("#modal-delete-button").click(function(buttonClickedEvent){
-            var id = buttonClickedEvent.target.data("id");
+            var id = $(this).data('data-id');
             controller.deleteBookmark(id)
         });
 
@@ -43,7 +50,9 @@
             var bookmarkButton = $("<button " + attr("type", "button") + attr("class","btn btn-info btn-lg") + attr("data-toggle", "modal") +  attr("data-target", "#myModal") + ">" + bookmark.title + "</button>");
             bookmarkButton.data("id", bookmark.id);
             bookmarkButton.click(function(buttonClickedEvent){
-                $("#modal-body-text").val(buttonClickedEvent.target.textContent);
+                var bookmarkId = $(this).data('id');
+                model.activeBookmark = model.findBookmarkById(bookmarkId);
+                ui.refreshModal();
             });
             $("#bookmarks").append(bookmarkButton);
         }
@@ -51,6 +60,10 @@
 
     refreshUser : function(){
         $("#username_id").text(model.user.name);
+    },
+
+    refreshModal : function(){
+        $("#modal-body-text").val(model.activeBookmark.title);
     }
  }
 
@@ -68,7 +81,7 @@
               }
             }
         });
-        
+
         controller.getUser();
         controller.getBookmarks();
     },
