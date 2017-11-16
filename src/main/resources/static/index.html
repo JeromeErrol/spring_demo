@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Hello Angular</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <h1>Hobby App</h1>
+
+    <label id="username_id">username</label>
+    <div>
+        <input type="button" id="add_bookmark_button" value="Add">
+        <input type="text" id="add_bookmark_text" placeholder="Name">
+    </div>
+    <div id="bookmarks"/>
+</div>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+beforeSend : function(xhr, settings) {
+  if (settings.type == 'POST' || settings.type == 'PUT'
+      || settings.type == 'DELETE') {
+    if (!(/^http:.*/.test(settings.url) || /^https:.*/
+        .test(settings.url))) {
+      // Only send the token to relative URLs i.e. locally.
+      xhr.setRequestHeader("X-XSRF-TOKEN", Cookies.get('XSRF-TOKEN'));
+    }
+  }
+}
+});
+</script>
+
+</body>
+</html>
