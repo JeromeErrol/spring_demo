@@ -5,23 +5,29 @@
     ui.init();
  }
 
- var model = {
-    activeBookmark : {},
-    user : {},
-    bookmarks : [],
+ var bookmarkRepository = {
 
-    findBookmarkById : function(id){
-        // TODO
-        return model.bookmarks[0];
+    findById : function(id){
+        for(var i = 0; i < model.bookmarks.length; i++){
+            if(model.bookmarks[i].id == id){
+                return model.bookmarks[i];
+            }
+        }
+        return null;
     }
  }
 
+ var model = {
+    bookmarks : []
+ }
+
  var ui = {
+    activeBookmark : {},
+    user : {},
 
     init : function(){
         $("#modal-delete-button").click(function(buttonClickedEvent){
-            var id = $(this).data('data-id');
-            controller.deleteBookmark(id)
+            controller.deleteBookmark(ui.activeBookmark.id);
         });
 
         $("#add_bookmark_button").click(function(){
@@ -51,19 +57,25 @@
             bookmarkButton.data("id", bookmark.id);
             bookmarkButton.click(function(buttonClickedEvent){
                 var bookmarkId = $(this).data('id');
-                model.activeBookmark = model.findBookmarkById(bookmarkId);
-                ui.refreshModal();
+                var bookmark = bookmarkRepository.findById(bookmarkId);
+                ui.setActiveBookmark(bookmark);
             });
             $("#bookmarks").append(bookmarkButton);
         }
     },
 
-    refreshUser : function(){
-        $("#username_id").text(model.user.name);
+    setUser : function(user){
+        ui.user = user;
+        $("#username_id").text(user.name);
     },
 
-    refreshModal : function(){
-        $("#modal-body-text").val(model.activeBookmark.title);
+    setActiveBookmark : function(bookmark){
+        ui.activeBookmark = bookmark;
+        if(ui.activeBookmark != null){
+            $("#modal-body-text").val(ui.activeBookmark.title);
+        }else{
+            $("#modal-body-text").val("");
+        }
     }
  }
 
@@ -87,19 +99,19 @@
     },
 
     deleteBookmark : function(id){
-        alert("deleting " + id);
-
         $.ajax({
-                      url: '/bookmarks/' + id, // your api url
-                      method: 'DELETE', // method is any HTTP method
-                      contentType : "application/json",
-                      error: function(message){
-                        alert(message.responseText);
-                      },
-                      success: function(bookmark) {
-                        alert(bookmark);
-                      }
-                  });
+            url: '/bookmarks/' + id, // your api url
+            method: 'DELETE', // method is any HTTP method
+            contentType : "application/json",
+            error: function(message){
+                alert(message.responseText);
+            },
+            success: function(bookmark) {
+
+            alert(id + " deleted ");
+                controller.getBookmarks();
+            }
+        });
     },
 
     getBookmarks : function(){
@@ -111,8 +123,7 @@
 
     getUser : function(user){
         $.get( "/user", function( user ) {
-            model.user = user;
-            ui.refreshUser();
+            ui.setUser(user);
         });
     }
  }
