@@ -30,22 +30,14 @@
             controller.deleteBookmark(ui.activeBookmark.id);
         });
 
+        $("#modal-update-button").click(function(){
+            controller.patchBookmark(ui.activeBookmark.id, $("#modal-body-text").val());
+        }),
+
         $("#add_bookmark_button").click(function(){
                 var title = $("#add_bookmark_text").val();
-                var bookmarkString = JSON.stringify({title : title});
-                  $.ajax({
-                      url: '/bookmarks/custom', // your api url
-                      method: 'POST', // method is any HTTP method
-                      data: bookmarkString, // data as js object
-                      contentType : "application/json",
-                      error: function(message){
-                        alert(message.responseText);
-                      },
-                      success: function(bookmark) {
-                        ui.addBookmark(bookmark);
-                      }
-                  });
-            });
+                controller.postBookmark(title);
+        });
     },
 
     refreshBookmarks : function(){
@@ -98,6 +90,22 @@
         controller.getBookmarks();
     },
 
+    postBookmark : function(title){
+        var bookmarkString = JSON.stringify({title : title});
+        $.ajax({
+            url: '/bookmarks/custom', // your api url
+            method: 'POST', // method is any HTTP method
+            data: bookmarkString, // data as js object
+            contentType : "application/json",
+            error: function(message){
+                alert(message.responseText);
+            },
+            success: function(bookmark) {
+                controller.getBookmarks();
+            }
+        });
+    },
+
     deleteBookmark : function(id){
         $.ajax({
             url: '/bookmarks/' + id, // your api url
@@ -105,12 +113,22 @@
             contentType : "application/json",
             error: function(message){
                 alert(message.responseText);
-            },
-            success: function(bookmark) {
-
-            alert(id + " deleted ");
-                controller.getBookmarks();
             }
+        });
+    },
+
+    patchBookmark : function(id, title){
+        $.ajax({
+                url: '/bookmarks/' + id, // your api url
+                method: 'PATCH', // method is any HTTP method
+                contentType : "application/json",
+                error: function(message){
+                    alert(message.responseText);
+                },
+                success: function(bookmark) {
+                    alert(id + " updated ");
+                    controller.getBookmarks();
+                }
         });
     },
 
