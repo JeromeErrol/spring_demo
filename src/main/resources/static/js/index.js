@@ -30,7 +30,8 @@
         });
 
         $("#modal-update-button").click(function(){
-            controller.patchBookmark(ui.activeBookmark.id, $("#modal-body-text").val());
+            ui.activeBookmark.title = $("#modal-body-text").val();
+            controller.patchBookmark(ui.activeBookmark);
         }),
 
         $("#add_bookmark_button").click(function(){
@@ -72,7 +73,7 @@
     init : function(){
         $.ajaxSetup({
             beforeSend : function(xhr, settings) {
-                if (settings.type == 'POST' || settings.type == 'PUT'
+                if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'PATCH'
                   || settings.type == 'DELETE') {
                     if (!(/^http:.*/.test(settings.url) || /^https:.*/
                     .test(settings.url))) {
@@ -117,16 +118,16 @@
         });
     },
 
-    patchBookmark : function(id, title){
+    patchBookmark : function(bookmark){
         $.ajax({
-                url: '/bookmarks/' + id, // your api url
+                url: '/bookmarks/' + bookmark.id, // your api url
                 method: 'PATCH', // method is any HTTP method
                 contentType : "application/json",
+                data : JSON.stringify(bookmark),
                 error: function(message){
                     alert(message.responseText);
                 },
                 success: function(bookmark) {
-                    alert(id + " updated ");
                     controller.getBookmarks();
                 }
         });
