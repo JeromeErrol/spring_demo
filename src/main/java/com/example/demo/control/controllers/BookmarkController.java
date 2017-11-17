@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,4 +34,15 @@ public class BookmarkController {
             throw new UserNotFoundException("user with username " + principal.getName() + " does not exist");
         }
     }
+
+    @GetMapping(value = "bookmarks/custom")
+    public ResponseEntity<List<Bookmark>> get(Principal principal){
+        Optional<Account> accountOptional = accountRepository.findByUsername(principal.getName());
+        if (accountOptional.isPresent()) {
+            return new ResponseEntity<>(accountOptional.get().getBookmarks(), HttpStatus.OK);
+        } else {
+            throw new UserNotFoundException("user with username " + principal.getName() + " does not exist");
+        }
+    }
+
 }

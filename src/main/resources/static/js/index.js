@@ -134,8 +134,8 @@
     },
 
     getBookmarks : function(){
-        $.get( "/bookmarks", function( response ) {
-            model.bookmarks = response._embedded.bookmarks;
+        $.get( "/bookmarks/custom", function( bookmarks ) {
+            model.bookmarks = bookmarks;
             ui.refreshBookmarks();
         });
     },

@@ -3,6 +3,7 @@ package com.example.demo.model.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -15,6 +16,9 @@ public class Account {
     @JsonIgnore
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "account")
+    private List<Bookmark> bookmarks;
 
     Account() { // jpa only
     }
@@ -46,5 +50,14 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public List<Bookmark> getBookmarks() {
+        return bookmarks;
+    }
+
+    public void setBookmarks(List<Bookmark> bookmarks) {
+        this.bookmarks = bookmarks;
     }
 }

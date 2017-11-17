@@ -1,5 +1,7 @@
 package com.example.demo.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class Bookmark {
     @Column(nullable = false)
     private String title;
 
+    @JsonIgnore
     @ManyToOne
     private Account account;
 
