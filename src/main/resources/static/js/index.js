@@ -23,7 +23,6 @@
 
  var ui = {
     activeBookmark : {},
-    user : {},
 
     init : function(){
         $("#modal-delete-button").click(function(buttonClickedEvent){
@@ -35,8 +34,7 @@
         }),
 
         $("#add_bookmark_button").click(function(){
-                var title = $("#add_bookmark_text").val();
-                controller.postBookmark(title);
+            controller.postBookmark($("#add_bookmark_text").val());
         });
     },
 
@@ -57,7 +55,6 @@
     },
 
     setUser : function(user){
-        ui.user = user;
         $("#username_id").text(user.name);
     },
 
@@ -113,6 +110,9 @@
             contentType : "application/json",
             error: function(message){
                 alert(message.responseText);
+            },
+            success : function(bookmark) {
+                controller.getBookmarks();
             }
         });
     },
