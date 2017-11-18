@@ -37,6 +37,10 @@
         $("#add_bookmark_button").click(function(){
             controller.postBookmark($("#add_bookmark_text").val());
         });
+
+        $("#logout-button").click(function(){
+            controller.logout();
+        });
     },
 
     refreshBookmarks : function(){
@@ -144,6 +148,20 @@
         $.get( "/user", function( user ) {
             ui.setUser(user);
         });
+    },
+
+    logout : function(response){
+        $.ajax({
+                    url: '/logout', // your api url
+                    method: 'POST', // method is any HTTP method
+                    contentType : "application/json",
+                    error: function(message){
+                        alert(message.responseText);
+                    },
+                    success: function(bookmark) {
+                        window.location.href = '/login';
+                    }
+                });
     }
  }
 
