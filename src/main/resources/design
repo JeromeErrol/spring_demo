@@ -1,8 +1,6 @@
 
 Bugs
-[ ] Only display bookmarks belonging to account
+[ ] All users can reach admin page
 
 Features
-[ ] Admin login
-[ ] Pagination and sorting
-
+[ ] Logout button

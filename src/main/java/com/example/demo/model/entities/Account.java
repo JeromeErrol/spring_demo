@@ -20,6 +20,9 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Bookmark> bookmarks;
 
+    @Column(nullable = false)
+    private String role;
+
     Account() { // jpa only
     }
 
@@ -59,5 +62,19 @@ public class Account {
 
     public void setBookmarks(List<Bookmark> bookmarks) {
         this.bookmarks = bookmarks;
+    }
+
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @JsonIgnore
+    public String[] getRoles(){
+        return role.split(" ");
     }
 }

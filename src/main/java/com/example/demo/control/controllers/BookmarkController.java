@@ -1,8 +1,8 @@
 package com.example.demo.control.controllers;
 
+import com.example.demo.control.exceptions.UserNotFoundException;
 import com.example.demo.model.entities.Account;
 import com.example.demo.model.entities.Bookmark;
-import com.example.demo.control.exceptions.UserNotFoundException;
 import com.example.demo.model.repositories.AccountRepository;
 import com.example.demo.model.repositories.BookmarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;

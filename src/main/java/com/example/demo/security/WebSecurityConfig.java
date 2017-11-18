@@ -14,14 +14,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/webjars/**").permitAll()
+                    .antMatchers("/admin**").hasRole("ADMIN")
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .permitAll()
+                .formLogin().permitAll()
                 .and()
                 .logout()
                 .permitAll();
-
     }
 }
