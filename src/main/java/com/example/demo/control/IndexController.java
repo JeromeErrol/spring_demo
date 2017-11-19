@@ -1,4 +1,4 @@
-package com.example.demo.control.controllers;
+package com.example.demo.control;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,5 +23,10 @@ public class IndexController {
     public String logout(){
         SecurityContextHolder.clearContext();
         return "redirect:/index.html";
+    }
+
+    @GetMapping("/index")
+    public String index(){
+        return "index";
     }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.control.controllers;
+package com.example.demo.control;
 
 import com.example.demo.control.exceptions.UserNotFoundException;
 import com.example.demo.model.entities.Account;
