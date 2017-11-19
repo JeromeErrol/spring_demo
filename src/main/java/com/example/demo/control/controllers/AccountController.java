@@ -1,5 +1,6 @@
 package com.example.demo.control.controllers;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,4 +13,5 @@ public class AccountController {
     public Principal user(Principal user) {
         return user;
     }
+
 }

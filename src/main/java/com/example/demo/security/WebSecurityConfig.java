@@ -14,6 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .authorizeRequests()
+                    .antMatchers("/register**").not().authenticated()
                     .antMatchers("/webjars/**").permitAll()
                     .antMatchers("/admin**").hasRole("ADMIN")
                     .anyRequest().authenticated()
@@ -24,6 +25,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/login")
                     .invalidateHttpSession(true)
                 .permitAll();
+
+
+        http.authorizeRequests()
+                .antMatchers("/resources/static/js**").permitAll();
 
 
     }
