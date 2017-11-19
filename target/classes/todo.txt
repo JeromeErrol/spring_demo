@@ -1,4 +1,0 @@
-Features
-[ ] Implement Logout
-
-[ ] Implement account registration
