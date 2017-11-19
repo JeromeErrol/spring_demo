@@ -25,8 +25,8 @@ public class IndexController {
         return "redirect:/index.html";
     }
 
-    @GetMapping("/index")
-    public String index(){
-        return "index";
+    @GetMapping("/about")
+    public String about(){
+        return "about";
     }
 }
