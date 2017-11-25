@@ -29,4 +29,9 @@ public class IndexController {
     public String about(){
         return "about";
     }
+
+    @GetMapping("/index")
+    public String index(){
+        return "index";
+    }
 }

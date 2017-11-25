@@ -1,6 +1,5 @@
 
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Demo</title>
     <link rel="stylesheet" type="text/css"
@@ -9,7 +8,7 @@
     <script type="text/javascript"
             src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
-    <script type="text/javascript" src="js/register.js"></script>
+    <!--<script type="text/javascript" src="/js/register.js"></script>-->
 </head>
 
 <body>
@@ -19,9 +18,48 @@
         <p>email</p>
         <input type="email" id="register-email"/>
         <p>password</p>
-        <input type="text" id="register-text"/>
+        <input type="text" id="register-password"/>
         <input type="button" id="register-button" value="register"/>
     </div>
 </div>
+<script type="text/javascript">
+
+    $( document ).ready(function(){
+
+         $.ajaxSetup({
+            beforeSend : function(xhr, settings) {
+                if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'PATCH'
+                  || settings.type == 'DELETE') {
+                    if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                    .test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-XSRF-TOKEN", Cookies.get('XSRF-TOKEN'));
+                }
+              }
+            }
+        });
+
+        $("#register-button").click(function(){
+
+        var account = {};
+        account["username"] = $("#register-email").val();
+        account["password"] = $("#register-password").val();
+
+        $.ajax({
+                url: '/register', // your api url
+                method: 'POST', // method is any HTTP method
+                data: JSON.stringify(account), // data as js object
+                contentType : "application/json",
+                error: function(message){
+                    alert(message.responseText);
+                },
+                success: function(response) {
+                    alert("hello");
+                }
+        });
+    });
+});
+</script>
 </body>
 </html>
+
